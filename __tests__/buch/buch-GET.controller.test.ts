@@ -17,8 +17,8 @@ import { afterAll, beforeAll, describe, expect, test } from '@jest/globals';
 import { HttpStatus } from '@nestjs/common';
 import axios, { type AxiosInstance, type AxiosResponse } from 'axios';
 import { Decimal } from 'decimal.js';
-import { type Buch } from '../../src/buch/entity/buch.entity.js';
-import { type Page } from '../../src/buch/controller/page.js';
+import { type Auto } from '../../src/auto/entity/auto.entity.js';
+import { type Page } from '../../src/auto/controller/page.js';
 import {
     host,
     httpsAgent,
@@ -61,11 +61,11 @@ describe('GET /rest', () => {
         await shutdownServer();
     });
 
-    test('Alle Buecher', async () => {
+    test('Alle Autos', async () => {
         // given
 
         // when
-        const { status, headers, data }: AxiosResponse<Page<Buch>> =
+        const { status, headers, data }: AxiosResponse<Page<Auto>> =
             await client.get('/');
 
         // then
@@ -74,18 +74,18 @@ describe('GET /rest', () => {
         expect(data).toBeDefined();
 
         data.content
-            .map((buch) => buch.id)
+            .map((auto) => auto.id)
             .forEach((id) => {
                 expect(id).toBeDefined();
             });
     });
 
-    test('Buecher mit einem Teil-Titel suchen', async () => {
+    test('Autos mit einer Marke suchen', async () => {
         // given
         const params = { titel: titelVorhanden };
 
         // when
-        const { status, headers, data }: AxiosResponse<Page<Buch>> =
+        const { status, headers, data }: AxiosResponse<Page<Auto>> =
             await client.get('/', { params });
 
         // then
@@ -95,7 +95,7 @@ describe('GET /rest', () => {
 
         // Jedes Buch hat einen Titel mit dem Teilstring 'a'
         data.content
-            .map((buch) => buch.titel)
+            .map((auto) => auto.marke)
             .forEach((titel) =>
                 expect(titel?.titel.toLowerCase()).toEqual(
                     expect.stringContaining(titelVorhanden),
@@ -103,7 +103,7 @@ describe('GET /rest', () => {
             );
     });
 
-    test('Buecher zu einem nicht vorhandenen Teil-Titel suchen', async () => {
+    test('Autos zu einem nicht vorhandenen Teil-Titel suchen', async () => {
         // given
         const params = { titel: titelNichtVorhanden };
 
@@ -127,7 +127,7 @@ describe('GET /rest', () => {
         const params = { rating: ratingMin };
 
         // when
-        const { status, headers, data }: AxiosResponse<Page<Buch>> =
+        const { status, headers, data }: AxiosResponse<Page<Autos>> =
             await client.get('/', { params });
 
         // then
@@ -137,7 +137,7 @@ describe('GET /rest', () => {
 
         // Jedes Buch hat einen Titel mit dem Teilstring 'a'
         data.content
-            .map((buch) => buch.rating)
+            .map((auto) => auto.rating)
             .forEach((rating) =>
                 expect(rating).toBeGreaterThanOrEqual(ratingMin),
             );

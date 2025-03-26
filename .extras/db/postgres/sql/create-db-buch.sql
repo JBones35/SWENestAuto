@@ -67,12 +67,12 @@
 --     docker compose down
 
 -- https://www.postgresql.org/docs/current/sql-createrole.html
-CREATE ROLE buch LOGIN PASSWORD 'p';
+CREATE ROLE auto LOGIN PASSWORD 'p';
 
 -- https://www.postgresql.org/docs/current/sql-createdatabase.html
-CREATE DATABASE buch;
+CREATE DATABASE auto;
 
-GRANT ALL ON DATABASE buch TO buch;
+GRANT ALL ON DATABASE auto TO auto;
 
 -- https://www.postgresql.org/docs/10/sql-createtablespace.html
-CREATE TABLESPACE buchspace OWNER buch LOCATION '/var/lib/postgresql/tablespace/buch';
+CREATE TABLESPACE autospace OWNER buch LOCATION '/var/lib/postgresql/tablespace/auto';

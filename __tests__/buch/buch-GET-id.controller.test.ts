@@ -34,7 +34,7 @@
 import { afterAll, beforeAll, describe, expect, test } from '@jest/globals';
 import { HttpStatus } from '@nestjs/common';
 import axios, { type AxiosInstance, type AxiosResponse } from 'axios';
-import { type Buch } from '../../src/buch/entity/buch.entity.js';
+import { type Auto } from '../../src/auto/entity/auto.entity.js';
 import {
     host,
     httpsAgent,
@@ -75,12 +75,12 @@ describe('GET /rest/:id', () => {
         await shutdownServer();
     });
 
-    test('Buch zu vorhandener ID', async () => {
+    test('Auto zu vorhandener ID', async () => {
         // given
         const url = `/${idVorhanden}`;
 
         // when
-        const { status, headers, data }: AxiosResponse<Buch> =
+        const { status, headers, data }: AxiosResponse<Auto> =
             await client.get(url);
 
         // then
@@ -92,7 +92,7 @@ describe('GET /rest/:id', () => {
         expect(id?.toString()).toBe(idVorhanden);
     });
 
-    test('Kein Buch zu nicht-vorhandener ID', async () => {
+    test('Kein Auto zu nicht-vorhandener ID', async () => {
         // given
         const url = `/${idNichtVorhanden}`;
 
@@ -110,7 +110,7 @@ describe('GET /rest/:id', () => {
         expect(statusCode).toBe(HttpStatus.NOT_FOUND);
     });
 
-    test('Kein Buch zu falscher ID', async () => {
+    test('Kein Auto zu falscher ID', async () => {
         // given
         const url = `/${idFalsch}`;
 
@@ -127,7 +127,7 @@ describe('GET /rest/:id', () => {
         expect(statusCode).toBe(HttpStatus.NOT_FOUND);
     });
 
-    test('Buch zu vorhandener ID mit ETag', async () => {
+    test('Auto zu vorhandener ID mit ETag', async () => {
         // given
         const url = `/${idVorhandenETag}`;
 
